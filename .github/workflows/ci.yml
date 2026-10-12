@@ -1,0 +1,52 @@
+name: ci
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      # Phase 3 adds the stagenet-fixture integration job here (dev box).
+
+  smoke:
+    # "stagenet fixture" CI stage: full API slice against a throwaway
+    # Postgres with the fake engine (no chain needed in CI runners).
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:18
+        env:
+          POSTGRES_USER: xmrwallet
+          POSTGRES_PASSWORD: citest
+          POSTGRES_DB: xmrwallet_ci
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready --health-interval 5s --health-timeout 5s --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - name: smoke (fake engine)
+        working-directory: server
+        env:
+          DATABASE_URL: postgres://xmrwallet:citest@127.0.0.1:5432/xmrwallet_ci
+          MASTER_KEY_B64: Nzk0ZjNkMjE2ZGRmYzY2YzYyZTNlYjQ5ZGFmMjEzNGY= # dev/CI only, 32 bytes
+          DAEMON_URL: http://127.0.0.1:38081
+          WALLET_DIR: /tmp/ci-wallets
+          ENGINE: fake
+        run: |
+          mkdir -p /tmp/ci-wallets
+          npm run smoke

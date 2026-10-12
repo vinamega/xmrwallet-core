@@ -1,0 +1,6 @@
+[Unit]
+Description=Disk usage alert check (non-prod example)
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/disk-alert.sh

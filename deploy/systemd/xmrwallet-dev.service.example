@@ -1,0 +1,25 @@
+[Unit]
+Description=xmrwallet app server (stagenet, dev)
+After=network.target postgresql.service monerod-stagenet.service
+Wants=monerod-stagenet.service
+
+# Non-prod example unit. Prod runs as mwprod with its own env file
+# (chmod 600, not readable by dev users) — never this unit.
+
+[Service]
+Type=simple
+User=xmrwallet
+Group=xmrwallet
+WorkingDirectory=/opt/xmrwallet/server
+EnvironmentFile=/etc/xmrwallet/dev.env
+ExecStart=/usr/bin/node dist/server/src/index.js
+Restart=on-failure
+RestartSec=5
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/wallets/stagenet/managed
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

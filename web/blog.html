@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog · xmrwallet</title>
+  <link rel="stylesheet" href="/app.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><span class="brand-dot"></span> <a href="/" class="plain-link">xmrwallet</a></div>
+    <span class="muted small">blog</span>
+  </header>
+  <main>
+    <div class="hero">
+      <h1>Blog</h1>
+      <p class="sub">Notes on Monero, privacy tech, and boring, dependable code.</p>
+    </div>
+
+    <article class="card post">
+      <h2 class="post-title">Why I built another Monero web wallet</h2>
+      <p class="muted small post-meta">October 2026 · Justin Tharpe</p>
+
+      <p>There is no shortage of Monero wallets. So why build one more?</p>
+
+      <p>Because most of them ask you to choose between two things I didn't want to
+        choose between: running a full node on my own hardware, or handing my keys
+        to someone else's browser app. The first is honest but heavy — a full node
+        is tens of gigabytes and a multi-day sync before you can see a balance.
+        The second is easy, but "the keys live in a tab" never sat right with me.</p>
+
+      <p>xmrwallet-core takes the middle road, and is upfront about what that
+        means. Your seed phrase is yours. The server stores it encrypted
+        (AES-256-GCM, per-wallet data keys wrapped by a master key that never
+        leaves the service environment) and does the heavy lifting: chain
+        scanning, transaction building, signing. Nothing wallet-related runs in
+        your browser — just a static page and an API. That makes restores fast,
+        balances instant after the first scan, and the whole thing auditable:
+        it's a plain TypeScript app you can read in an afternoon and run
+        yourself. The repo <em>is</em> the product.</p>
+
+      <p>A few decisions worth explaining:</p>
+
+      <p><strong>The server is the wallet.</strong> This is a semi-custodial model
+        and I'm not going to pretend otherwise. If you want full self-custody,
+        run your own instance — it's designed for exactly that, and the hosted
+        one exists for people who'd otherwise use something worse.</p>
+
+      <p><strong>Restores are a background job, not a progress bar you babysit.</strong>
+        Import a seed with an approximate date and it's ready in minutes; leave
+        the height at zero and it scans in the background while the page stays
+        live. New wallets created on the site sync instantly since we record the
+        chain height at birth.</p>
+
+      <p><strong>Boring code on purpose.</strong> Node.js, Postgres, vanilla JS
+        frontend, zero third-party scripts, a CSP with no exceptions. The
+        exciting part should be Monero, not the wallet software.</p>
+
+      <p>It's on stagenet-first development (real coins, zero value, free
+        faucets), with mainnet support in the same build. If you want to poke at
+        it, the quick start in the README takes about ten minutes.</p>
+
+      <p>Feedback welcome — <a href="https://github.com/vinamega/xmrwallet-core" rel="noopener">the
+        repo</a> is the best place for issues and questions. If it's useful to
+        you, <a href="/donate">donations</a> keep the lights on.</p>
+    </article>
+
+    <div class="site-links small">
+      <a href="/">Home</a>
+      <span class="muted">·</span>
+      <a href="/donate">Donate</a>
+      <span class="muted">·</span>
+      <a href="https://x.com/justintharpedev" rel="noopener">Twitter</a>
+      <span class="muted">·</span>
+      <a href="https://www.linkedin.com/in/justintharpe/" rel="noopener">LinkedIn</a>
+      <span class="muted">·</span>
+      <a href="https://github.com/vinamega/xmrwallet-core" rel="noopener">GitHub</a>
+    </div>
+  </main>
+  <footer class="footer">
+    <span class="muted small">xmrwallet · open-source Monero web wallet</span>
+    <span class="footer-links small">
+      <a href="/">Home</a>
+      <a href="/donate">Donate</a>
+      <a href="https://x.com/justintharpedev" rel="noopener">Twitter</a>
+      <a href="https://www.linkedin.com/in/justintharpe/" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/vinamega/xmrwallet-core" rel="noopener">GitHub</a>
+    </span>
+  </footer>
+</body>
+</html>

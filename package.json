@@ -1,0 +1,20 @@
+{
+  "name": "xmrwallet-core",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "server",
+    "plugins"
+  ],
+  "scripts": {
+    "lint": "eslint server plugins",
+    "typecheck": "tsc --noEmit -p server",
+    "test": "npm test -w server",
+    "build": "npm run build -w server",
+    "smoke": "npm run smoke -w server"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "typescript-eslint": "^8.71.1"
+  }
+}

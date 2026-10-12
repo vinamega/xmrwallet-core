@@ -1,0 +1,22 @@
+[Unit]
+Description=monerod (stagenet, dev)
+After=network.target
+
+# Non-prod example unit. Installed at /etc/systemd/system/ on the dev box.
+# Binaries at /opt/monero/bin (verified against getmonero.org signed hashes).
+
+[Service]
+Type=simple
+User=monerosvc
+Group=monerosvc
+ExecStart=/opt/monero/bin/monerod --config-file /etc/monero/stagenet/monerod.conf --non-interactive
+Restart=on-failure
+RestartSec=10
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/monero/stagenet
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

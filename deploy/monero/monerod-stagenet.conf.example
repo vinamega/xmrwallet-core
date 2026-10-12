@@ -1,0 +1,10 @@
+# monerod stagenet — DEV BOX (non-prod example)
+# Guide §3: non-standard ports, stagenet data dir strictly separate from any mainnet dir.
+# Installed at /etc/monero/stagenet/monerod.conf on the dev box.
+stagenet=1
+data-dir=/srv/monero/stagenet
+p2p-bind-port=38080
+rpc-bind-port=38081
+rpc-bind-ip=127.0.0.1
+no-igd=1
+hide-my-port=1

@@ -1,0 +1,32 @@
+[Unit]
+Description=monero-wallet-rpc (stagenet, dev)
+After=network.target monerod-stagenet.service
+Wants=monerod-stagenet.service
+
+# Non-prod example unit. Loopback-only; dev credentials are local-dev
+# placeholders -- CHANGE the rpc-login on your own dev box.
+# NOTE: monerod's restricted RPC auto-binds rpc-bind-port+1 (38082),
+# so wallet-rpc uses 38084 (same convention as monero-ts docs).
+
+[Service]
+Type=simple
+User=xmrwallet
+Group=xmrwallet
+ExecStart=/opt/monero/bin/monero-wallet-rpc \
+  --stagenet \
+  --daemon-address 127.0.0.1:38081 \
+  --rpc-bind-port 38084 \
+  --rpc-bind-ip 127.0.0.1 \
+  --wallet-dir /srv/wallets/stagenet/wallet-rpc \
+  --rpc-login mondev:CHANGE_ME_LOCAL_DEV_ONLY \
+  --log-level 4
+Restart=on-failure
+RestartSec=10
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/srv/wallets/stagenet
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

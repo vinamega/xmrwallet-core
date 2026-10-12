@@ -1,0 +1,7 @@
+[Unit]
+Description=Encrypted off-box seed store backup (non-prod example)
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/xmrwallet/backup.env
+ExecStart=/usr/local/bin/backup-seedstore.sh

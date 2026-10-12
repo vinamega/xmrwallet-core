@@ -1,0 +1,7 @@
+[Unit]
+Description=Restore queue depth alert (non-prod example)
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/xmrwallet/dev.env
+ExecStart=/usr/local/bin/queue-depth-alert.sh

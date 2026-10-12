@@ -1,0 +1,12 @@
+[Unit]
+Description=Encrypted off-box seed store backup (non-prod example)
+# See deploy/scripts/backup-seedstore.sh. Env file must carry
+# DATABASE_URL, BACKUP_PASSPHRASE, BACKUP_TARGET (service-owned, chmod 600).
+
+[Timer]
+OnCalendar=*-*-* 04:30:00
+Persistent=true
+RandomizedDelaySec=600
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,7 @@
+[Unit]
+Description=monerod sync alert (non-prod example)
+
+[Service]
+Type=oneshot
+EnvironmentFile=/etc/xmrwallet/dev.env
+ExecStart=/usr/local/bin/node-sync-alert.sh

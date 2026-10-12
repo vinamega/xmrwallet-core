@@ -1,0 +1,9 @@
+{
+  "name": "xmrwallet-plugins",
+  "version": "0.1.0",
+  "description": "Balance-action plugin interface + reference no-op plugin for xmrwallet-core (public)",
+  "private": true,
+  "type": "module",
+  "main": "src/index.ts",
+  "types": "src/index.ts"
+}

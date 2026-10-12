@@ -1,0 +1,10 @@
+[Unit]
+Description=Disk usage alert at 75%% (non-prod example)
+# Runs deploy/scripts/disk-alert.sh hourly; see guide §2 / §5.
+
+[Timer]
+OnCalendar=hourly
+Persistent=true
+
+[Install]
+WantedBy=timers.target

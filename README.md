@@ -1,7 +1,7 @@
 # xmrwallet-core
 
 Open-source hosted Monero web wallet ("light-wallet-style, server-side full
-wallet"). The public repo is the complete, working wallet; xmrwallet.net is
+wallet"). The public repo is the complete, working wallet; xmrwallet.org is
 a hosted instance of this code. No keys or wallet logic run in the browser.
 
 - `server/` — Node.js app: auth, encrypted seed store (Postgres, AES-256-GCM),
